@@ -1,0 +1,54 @@
+services:
+  - type: web
+    name: graph-node
+    env: docker
+    dockerfilePath: ./docker/Dockerfile.graph-node
+    envVars:
+      - key: postgres_host
+        value: postgres
+      - key: postgres_user
+        value: graph-node
+      - key: postgres_pass
+        value: let-me-in
+      - key: postgres_db
+        value: graph-node
+      - key: ipfs
+        value: "ipfs:5001"
+      - key: ethereum
+        value: "tDepo:https://test1rpc.depo.network"
+      - key: GRAPH_LOG
+        value: info
+    ports:
+      - 8000
+      - 8001
+      - 8020
+      - 8030
+      - 8040
+    dependsOn:
+      - ipfs
+      - postgres
+
+  - type: web
+    name: ipfs
+    env: docker
+    dockerfilePath: ./docker/Dockerfile.ipfs
+    ports:
+      - 5001
+
+  - type: web
+    name: postgres
+    env: docker
+    dockerfilePath: ./docker/Dockerfile.postgres
+    envVars:
+      - key: POSTGRES_USER
+        value: graph-node
+      - key: POSTGRES_PASSWORD
+        value: let-me-in
+      - key: POSTGRES_DB
+        value: graph-node
+      - key: PGDATA
+        value: "/var/lib/postgresql/data"
+      - key: POSTGRES_INITDB_ARGS
+        value: "-E UTF8 --locale=C"
+    ports:
+      - 5432
