@@ -7,5 +7,5 @@ edition.workspace = true
 graph = { path = "../../graph" }
 serde = { workspace = true }
 serde_derive = { workspace = true }
-tokio-tungstenite = "0.23"
+tokio-tungstenite = "0.25"
 uuid = { version = "1.9.1", features = ["v4"] }
